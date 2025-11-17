@@ -3,286 +3,803 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Антискука - чем заняться когда скучно</title>
+    <title>Флоралия - Магазин цветов с душой</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #ffffff;
-            --secondary: #f8f9fa;
-            --accent-1: #ff6b6b;
-            --accent-2: #4ecdc4;
-            --accent-3: #ffe66d;
-            --accent-4: #ff9f68;
-            --accent-5: #6a4cff;
-            --text: #2d3436;
-            --text-secondary: #636e72;
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --border: rgba(255, 255, 255, 0.3);
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
+        /* Основные стили */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        html {
-            scroll-behavior: smooth;
+        :root {
+            --primary-color: #e8a2af;
+            --secondary-color: #d48aa0;
+            --accent-color: #c1748f;
+            --dark-color: #8a5a6d;
+            --light-color: #fff5f7;
+            --text-color: #5a4a4f;
+            --background: #fdf2f8;
+            --card-bg: #fce7f3;
+            --success-color: #8bc34a;
+            --article-bg: #f8f0f5;
+            --navbar-bg: rgba(253, 242, 248, 0.95);
+            --footer-bg: #8a5a6d;
+        }
+
+        /* Ночная тема */
+        body.dark-theme {
+            --primary-color: #e8a2af;
+            --secondary-color: #d48aa0;
+            --accent-color: #c1748f;
+            --dark-color: #f8d7e3;
+            --light-color: #2a1f25;
+            --text-color: #e8d7df;
+            --background: #2a1f25;
+            --card-bg: #3a2a32;
+            --success-color: #8bc34a;
+            --article-bg: #3a2a32;
+            --navbar-bg: rgba(42, 31, 37, 0.95);
+            --footer-bg: #1a1417;
         }
 
         body {
-            background: var(--primary);
-            color: var(--text);
-            line-height: 1.7;
-            min-height: 100vh;
+            background: var(--background);
+            color: var(--text-color);
             overflow-x: hidden;
-            transition: background 1s ease;
+            min-height: 100vh;
+            position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        .container {
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.03"><path d="M50,20 C60,10 80,15 80,30 C80,45 65,50 50,60 C35,50 20,45 20,30 C20,15 40,10 50,20 Z" fill="%238a5a6d"/></svg>');
+            background-size: 150px;
+            z-index: -1;
+        }
+
+        body.dark-theme::before {
+            background-image: 
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.05"><path d="M50,20 C60,10 80,15 80,30 C80,45 65,50 50,60 C35,50 20,45 20,30 C20,15 40,10 50,20 Z" fill="%23f8d7e3"/></svg>');
+        }
+
+        /* Анимации */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        /* Навигация */
+        .navbar {
+            background: var(--navbar-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(232, 162, 175, 0.3);
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* Header & Navigation */
-        header {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(15px);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: var(--shadow);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.2rem 0;
-        }
-
         .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--text);
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--dark-color);
             text-decoration: none;
             display: flex;
             align-items: center;
-            position: relative;
         }
 
-        .logo span {
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-left: 5px;
+        .logo i {
+            margin-right: 10px;
+            color: var(--primary-color);
         }
 
-        .logo::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-            transition: width 0.5s ease;
-            border-radius: 2px;
-        }
-
-        .logo:hover::after {
-            width: 100%;
-        }
-
-        nav ul {
+        .nav-links {
             display: flex;
             list-style: none;
         }
 
-        nav li {
-            margin-left: 2.5rem;
-            position: relative;
+        .nav-links li {
+            margin-left: 30px;
         }
 
-        nav a {
-            color: var(--text);
+        .nav-links a {
             text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 18px;
+            transition: all 0.3s ease;
             position: relative;
             padding: 5px 0;
         }
 
-        nav a::after {
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 0;
-            height: 3px;
-            background: var(--accent-1);
+            height: 2px;
+            background: var(--primary-color);
             transition: width 0.3s ease;
-            border-radius: 2px;
         }
 
-        nav a:hover::after {
+        .nav-links a:hover::after {
             width: 100%;
         }
 
-        nav a.active {
-            color: var(--accent-1);
-        }
-
-        nav a.active::after {
-            width: 100%;
-        }
-
-        .mobile-menu-btn {
+        .hamburger {
             display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--dark-color);
             background: none;
             border: none;
-            color: var(--text);
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 1001;
         }
 
-        /* Hero Section */
-        .hero {
-            padding: 10rem 0 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.7;
-        }
-
-        .floating-shape {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(40px);
-            opacity: 0.5;
-            animation: float 20s infinite ease-in-out;
-        }
-
-        .shape-1 {
-            width: 300px;
-            height: 300px;
-            top: 10%;
-            left: 5%;
-            background: var(--accent-1);
-            animation-delay: 0s;
-        }
-
-        .shape-2 {
-            width: 200px;
-            height: 200px;
-            top: 60%;
-            left: 80%;
-            background: var(--accent-2);
-            animation-delay: 5s;
-        }
-
-        .shape-3 {
-            width: 250px;
-            height: 250px;
-            top: 80%;
-            left: 10%;
-            background: var(--accent-3);
-            animation-delay: 10s;
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            33% { transform: translate(30px, -50px) rotate(120deg) scale(1.1); }
-            66% { transform: translate(-20px, 20px) rotate(240deg) scale(0.9); }
-            100% { transform: translate(0, 0) rotate(360deg) scale(1); }
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-3));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: textShine 5s ease-in-out infinite alternate;
-            font-weight: 800;
-            line-height: 1.2;
-        }
-
-        @keyframes textShine {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            max-width: 800px;
-            margin: 0 auto 3rem;
-            color: var(--text-secondary);
-        }
-
-        .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.4s;
+        /* Переключатель темы */
+        .theme-toggle {
+            background: none;
             border: none;
+            color: var(--dark-color);
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            font-size: 1.2rem;
+            margin-left: 20px;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .btn::before {
+        .theme-toggle:hover {
+            background: rgba(232, 162, 175, 0.2);
+        }
+
+        .theme-toggle .fa-sun {
+            display: none;
+        }
+
+        body.dark-theme .theme-toggle .fa-moon {
+            display: none;
+        }
+
+        body.dark-theme .theme-toggle .fa-sun {
+            display: block;
+        }
+
+        /* Главная страница */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--accent-3), var(--accent-4));
+            background-image: 
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.05"><path d="M50,20 C60,10 80,15 80,30 C80,45 65,50 50,60 C35,50 20,45 20,30 C20,15 40,10 50,20 Z" fill="%238a5a6d"/></svg>');
+            background-size: 200px;
+            animation: float 20s infinite linear;
             z-index: -1;
-            transition: opacity 0.4s;
-            opacity: 0;
-            border-radius: 50px;
         }
 
-        .btn:hover::before {
-            opacity: 1;
+        body.dark-theme .hero::before {
+            background-image: 
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.05"><path d="M50,20 C60,10 80,15 80,30 C80,45 65,50 50,60 C35,50 20,45 20,30 C20,15 40,10 50,20 Z" fill="%23f8d7e3"/></svg>');
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 35px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(232, 162, 175, 0.4);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
         }
 
         .btn:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 25px rgba(255, 107, 107, 0.5);
+            box-shadow: 0 8px 25px rgba(232, 162, 175, 0.6);
+            background: var(--accent-color);
         }
 
-        /* Page Sections */
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Секции */
+        .section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 60px;
+            color: var(--dark-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        /* О нас */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            animation: slideInLeft 1s ease;
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .about-visual {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            animation: slideInRight 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-visual i {
+            font-size: 8rem;
+            color: white;
+            z-index: 1;
+            animation: pulse 3s infinite;
+        }
+
+        /* Цветы */
+        .flowers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .flower-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            animation: fadeIn 1s ease;
+            border: 1px solid rgba(232, 162, 175, 0.3);
+        }
+
+        .flower-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .flower-image {
+            height: 250px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flower-image::before {
+            content: 'Фото цветка';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .flower-body {
+            padding: 25px;
+        }
+
+        .flower-name {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+            text-align: center;
+        }
+
+        .flower-symbolism {
+            line-height: 1.6;
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        /* Магазин */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            animation: fadeIn 1s ease;
+            border: 1px solid rgba(232, 162, 175, 0.3);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: 'Фото букета';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-body {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 10px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-btn i {
+            margin-right: 8px;
+        }
+
+        .action-btn:hover {
+            background: var(--accent-color);
+        }
+
+        /* Контакты */
+        .contact-container {
+            display: flex;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+            animation: slideInLeft 1s ease;
+        }
+
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+            animation: slideInRight 1s ease;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .contact-text h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(232, 162, 175, 0.5);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(232, 162, 175, 0.3);
+            outline: none;
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Футер */
+        footer {
+            background: var(--footer-bg);
+            color: white;
+            padding: 60px 20px 30px;
+            margin-top: 100px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        .footer-col p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        .footer-links a i {
+            margin-right: 10px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Декоративные элементы */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            opacity: 0.2;
+            animation: float 15s infinite linear;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+            width: 20px;
+            height: 20px;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 20%;
+            right: 15%;
+            animation-delay: 2s;
+            width: 25px;
+            height: 25px;
+            background: var(--secondary-color);
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 30%;
+            left: 15%;
+            animation-delay: 4s;
+            width: 35px;
+            height: 35px;
+            background: var(--accent-color);
+        }
+
+        .floating-element:nth-child(4) {
+            bottom: 20%;
+            right: 10%;
+            animation-delay: 6s;
+            width: 15px;
+            height: 15px;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--card-bg);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 50px;
+                transition: all 0.5s ease;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 15px 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Страницы */
         .page {
             display: none;
-            padding: 6rem 0;
-            animation: fadeIn 0.8s ease;
+            padding-top: 100px;
             min-height: 100vh;
         }
 
@@ -290,926 +807,1778 @@
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Анимации для появления элементов при прокрутке */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
         }
 
-        .section-title {
-            font-size: 3rem;
-            margin-bottom: 3rem;
-            text-align: center;
-            position: relative;
-            font-weight: 700;
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 100px;
-            height: 5px;
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-            margin: 1rem auto;
-            border-radius: 3px;
-            animation: linePulse 2s infinite;
+        /* Уведомления */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 1000;
         }
 
-        @keyframes linePulse {
-            0% { transform: scaleX(1); }
-            50% { transform: scaleX(1.2); }
-            100% { transform: scaleX(1); }
+        .notification.active {
+            transform: translateY(0);
+            opacity: 1;
         }
 
-        /* Cards */
-        .card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 2.5rem;
-            margin-bottom: 3rem;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-
-        .card::before {
-            content: '';
+        /* Новые стили для улучшений */
+        
+        /* Стили для счетчика товаров в корзине */
+        .cart-counter {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 100%;
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-            transition: width 0.4s;
-        }
-
-        .card:hover::before {
-            width: 10px;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .card h3 {
-            color: var(--accent-1);
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-            font-weight: 600;
-        }
-
-        .card p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2.5rem;
-        }
-
-        /* Activity Elements */
-        .activity-element {
-            width: 100%;
-            height: 200px;
-            border-radius: 15px;
-            margin: 2rem 0;
+            top: -5px;
+            right: -5px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 0.8rem;
             font-weight: bold;
-            color: white;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            transition: transform 0.4s;
         }
-
-        .activity-element:hover {
-            transform: scale(1.03);
-        }
-
-        .activity-element::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
-            z-index: 1;
-        }
-
-        .activity-element span {
-            position: relative;
-            z-index: 2;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        /* Content Sections */
-        .content-section {
-            margin-bottom: 5rem;
-        }
-
-        .content-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            color: var(--accent-2);
-            position: relative;
-            display: inline-block;
-            font-weight: 600;
-        }
-
-        .content-section h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60%;
-            height: 4px;
-            background: linear-gradient(135deg, var(--accent-3), var(--accent-4));
-            border-radius: 2px;
-        }
-
-        .content-section p {
-            margin-bottom: 1.8rem;
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-
-        .content-section ul, .content-section ol {
-            margin-left: 2rem;
-            margin-bottom: 2rem;
-            color: var(--text-secondary);
-        }
-
-        .content-section li {
-            margin-bottom: 0.8rem;
-            position: relative;
-        }
-
-        .content-section li::before {
-            content: '▸';
-            color: var(--accent-1);
-            font-weight: bold;
-            position: absolute;
-            left: -1.2rem;
-        }
-
-        .highlight {
-            background: rgba(255, 107, 107, 0.1);
-            border-left: 5px solid var(--accent-1);
-            padding: 2rem;
-            margin: 2.5rem 0;
-            border-radius: 0 15px 15px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .highlight::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(255, 107, 107, 0.05), transparent);
-            z-index: -1;
-        }
-
-        /* Random Activity Generator */
-        .activity-generator {
-            text-align: center;
-            padding: 3rem;
-            background: var(--card-bg);
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            margin: 3rem 0;
-        }
-
-        .generator-btn {
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-            color: white;
-            border: none;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.4s;
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
-        }
-
-        .generator-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 25px rgba(255, 107, 107, 0.5);
-        }
-
-        .activity-result {
-            margin-top: 2rem;
-            padding: 2rem;
-            background: linear-gradient(135deg, var(--accent-3), var(--accent-4));
-            border-radius: 15px;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 600;
+        
+        /* Стили для модального окна */
+        .modal {
             display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--secondary);
-            padding: 4rem 0;
-            margin-top: 6rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 80%, rgba(255, 107, 107, 0.1) 0%, transparent 50%);
-            z-index: 0;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .footer-logo {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--text);
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-logo span {
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 2.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s;
-            font-weight: 500;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-1);
-        }
-
-        .copyright {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        /* Progress Bar */
-        .progress-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 4px;
-            background: transparent;
-            z-index: 1001;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
         }
-
-        .progress-bar {
-            height: 4px;
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-            width: 0%;
-            transition: width 0.3s ease;
+        
+        .modal.active {
+            display: flex;
         }
-
-        /* Page-specific backgrounds */
-        #home {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            color: var(--text-color);
         }
-
-        #creative {
-            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
         }
-
-        #active {
-            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+        
+        /* Стили для кнопки корзины в навигации */
+        .cart-icon {
+            position: relative;
+            margin-left: 20px;
+            cursor: pointer;
+            color: var(--dark-color);
+            font-size: 1.2rem;
         }
-
-        #learning {
-            background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%);
+        
+        /* Стили для быстрых ссылок на соцсети */
+        .social-contact {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-direction: column;
         }
-
-        #random {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+        
+        .social-contact a {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s ease;
         }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .hero h1 {
-                font-size: 3rem;
-            }
-            
-            .section-title {
-                font-size: 2.5rem;
-            }
+        
+        .social-contact a:hover {
+            color: var(--primary-color);
         }
-
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            nav ul {
-                margin-top: 1.5rem;
-                flex-direction: column;
-            }
-
-            nav li {
-                margin: 0.8rem 0;
-            }
-
-            .hero {
-                padding: 8rem 0 3rem;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .card-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-                position: absolute;
-                top: 1.2rem;
-                right: 1rem;
-            }
-
-            .mobile-nav {
-                display: none;
-                width: 100%;
-                text-align: center;
-                background: var(--secondary);
-                padding: 1rem 0;
-                margin-top: 1rem;
-                border-radius: 10px;
-            }
-
-            .mobile-nav.active {
-                display: block;
-            }
-            
-            .content-section h2 {
-                font-size: 2rem;
-            }
-            
-            .footer-links {
-                flex-direction: column;
-                gap: 1rem;
-            }
+        
+        /* Стили для улучшенной навигации */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Стили для элементов корзины */
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid rgba(232, 162, 175, 0.3);
+        }
+        
+        .cart-item-info {
+            flex: 1;
+        }
+        
+        .cart-item-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .cart-item-price {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .quantity-btn:hover {
+            background: var(--accent-color);
+        }
+        
+        .cart-item-quantity {
+            font-weight: bold;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .remove-from-cart {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        .cart-total {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            font-size: 1.3rem;
+            text-align: right;
+            color: var(--dark-color);
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-color);
+        }
+        
+        /* Стили для формы оформления заказа */
+        .order-form {
+            margin-top: 20px;
+        }
+        
+        .order-success {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .order-success i {
+            font-size: 4rem;
+            color: var(--success-color);
+            margin-bottom: 20px;
+        }
+        
+        /* Стили для переключателя между корзиной и формой заказа */
+        .cart-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .cart-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            color: var(--text-color);
+        }
+        
+        .cart-tab.active {
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Стили для отзывов */
+        .reviews-container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .reviews-list {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .add-review {
+            flex: 1;
+            min-width: 300px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .review-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(232, 162, 175, 0.3);
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .review-author {
+            font-weight: bold;
+            color: var(--dark-color);
+        }
+        
+        .review-date {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+        
+        .review-rating {
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+        
+        .review-text {
+            line-height: 1.6;
+        }
+        
+        .rating-stars {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .rating-star {
+            font-size: 1.5rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .rating-star.active {
+            color: #ffc107;
+        }
+        
+        .reviews-filter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 15px;
+            background: var(--card-bg);
+            border: 1px solid rgba(232, 162, 175, 0.5);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+        }
+        
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* Стили для счетчика посещений */
+        .visitor-counter {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        /* Улучшенные сердечки на фоне */
+        .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .heart {
+            position: absolute;
+            color: var(--primary-color);
+            opacity: 0.1;
+            animation: float 15s infinite linear;
+        }
+        
+        .heart:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            font-size: 30px;
+            animation-delay: 0s;
+        }
+        
+        .heart:nth-child(2) {
+            top: 20%;
+            right: 10%;
+            font-size: 40px;
+            animation-delay: 2s;
+        }
+        
+        .heart:nth-child(3) {
+            bottom: 30%;
+            left: 15%;
+            font-size: 25px;
+            animation-delay: 4s;
+        }
+        
+        .heart:nth-child(4) {
+            bottom: 20%;
+            right: 5%;
+            font-size: 35px;
+            animation-delay: 6s;
+        }
+        
+        .heart:nth-child(5) {
+            top: 50%;
+            left: 50%;
+            font-size: 20px;
+            animation-delay: 8s;
+        }
+        
+        .heart:nth-child(6) {
+            top: 15%;
+            left: 80%;
+            font-size: 45px;
+            animation-delay: 10s;
+        }
+        
+        .heart:nth-child(7) {
+            bottom: 10%;
+            left: 70%;
+            font-size: 30px;
+            animation-delay: 12s;
+        }
+        
+        .heart:nth-child(8) {
+            top: 70%;
+            left: 10%;
+            font-size: 35px;
+            animation-delay: 14s;
+        }
+        
+        /* Улучшенная читаемость текста */
+        .text-bg {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+        
+        body.dark-theme .text-bg {
+            background: rgba(58, 42, 50, 0.7);
+        }
+        
+        /* Стили для полезных статей */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .article-card {
+            background: var(--article-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(232, 162, 175, 0.3);
+        }
+        
+        .article-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .article-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .article-image::before {
+            content: 'Иллюстрация';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .article-body {
+            padding: 25px;
+        }
+        
+        .article-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .article-excerpt {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+        
+        .article-link {
+            display: inline-block;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .article-link:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+        
+        /* Стили для улучшенной страницы "О нас" */
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(232, 162, 175, 0.3);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .feature-text {
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+        
+        /* Стили для экзотических цветов */
+        .exotic-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <!-- Progress Bar -->
-    <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
+    <!-- Декоративные элементы -->
+    <div class="heart-bg">
+        <div class="heart"><i class="fas fa-heart"></i></div>
+        <div class="heart"><i class="fas fa-heart"></i></div>
+        <div class="heart"><i class="fas fa-heart"></i></div>
+        <div class="heart"><i class="fas fa-heart"></i></div>
+        <div class="heart"><i class="fas fa-heart"></i></div>
+        <div class="heart"><i class="fas fa-heart"></i></div>
+        <div class="heart"><i class="fas fa-heart"></i></div>
+        <div class="heart"><i class="fas fa-heart"></i></div>
     </div>
 
-    <!-- Floating background elements -->
-    <div class="hero-bg">
-        <div class="floating-shape shape-1"></div>
-        <div class="floating-shape shape-2"></div>
-        <div class="floating-shape shape-3"></div>
-    </div>
-
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <a href="#" class="logo">Анти<span>Скука</span></a>
-                <button class="mobile-menu-btn">☰</button>
-                <nav class="mobile-nav">
-                    <ul>
-                        <li><a href="#" class="nav-link active" data-page="home">Главная</a></li>
-                        <li><a href="#" class="nav-link" data-page="creative">Творчество</a></li>
-                        <li><a href="#" class="nav-link" data-page="active">Активность</a></li>
-                        <li><a href="#" class="nav-link" data-page="learning">Обучение</a></li>
-                        <li><a href="#" class="nav-link" data-page="random">Случайности</a></li>
-                    </ul>
-                </nav>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo" data-page="home">
+                <i class="fas fa-spa"></i> Флоралия
+            </a>
+            <ul class="nav-links">
+                <li><a href="#" data-page="home">Главная</a></li>
+                <li><a href="#" data-page="about">О нас</a></li>
+                <li><a href="#" data-page="flowers">Цветы</a></li>
+                <li><a href="#" data-page="shop">Букеты</a></li>
+                <li><a href="#" data-page="articles">Статьи</a></li>
+                <li><a href="#" data-page="reviews">Отзывы</a></li>
+                <li><a href="#" data-page="contact">Контакты</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+                <div class="cart-icon" id="cartIcon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-counter" id="cartCounter">0</span>
+                </div>
+                <button class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <main>
-        <!-- Главная страница -->
-        <section id="home" class="page active">
-            <div class="hero">
-                <div class="container">
-                    <h1>Скучно? Найдем занятие!</h1>
-                    <p>Откройте для себя сотни интересных идей, которые превратят скуку в увлекательное приключение. Творчество, активность, обучение и неожиданные открытия ждут вас!</p>
-                    <a href="#" class="btn nav-link" data-page="creative">Найти идеи</a>
+    <!-- Счетчик посещений -->
+    <div class="visitor-counter">
+        <i class="fas fa-users"></i> Посетителей: <span id="visitorCount">0</span>
+    </div>
+
+    <!-- Главная страница -->
+    <section id="home" class="page active">
+        <div class="hero">
+            <div class="hero-content">
+                <div class="text-bg">
+                    <h1>Флоралия</h1>
+                    <p>Цветы, которые говорят на языке вашего сердца</p>
+                    <a href="#" class="btn" data-page="shop">Выбрать букет</a>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="container">
-                <div class="content-section">
-                    <h2>Почему нам бывает скучно?</h2>
-                    <p>Скука — это естественное состояние, которое сигнализирует о необходимости перемен. Вместо того чтобы бороться с ней, используйте скуку как возможность открыть для себя что-то новое и интересное.</p>
-                    
-                    <div class="highlight">
-                        <p>Скука — это пустое холст для вашего воображения. Заполните его красками новых впечатлений!</p>
+    <!-- О нас -->
+    <section id="about" class="page">
+        <div class="section">
+            <h2 class="section-title">О нашем магазине</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="text-bg">
+                        <p>Флоралия — это не просто цветочный магазин, это место, где рождаются эмоции и создаются воспоминания. Мы верим, что каждый цветок имеет свою душу и может передать самые сокровенные чувства.</p>
+                        <p>Наша команда флористов с многолетним опытом создает уникальные композиции, которые идеально подходят для любого случая — от романтического свидания до торжественного мероприятия.</p>
+                        <p>Мы тщательно отбираем каждый цветок, чтобы обеспечить его свежесть и долговечность. Все наши растения выращиваются в экологически чистых условиях и доставляются непосредственно от поставщиков.</p>
+                        <a href="#" class="btn" data-page="contact">Связаться с нами</a>
                     </div>
-                    
-                    <p>Наш мозг постоянно ищет новизну и стимуляцию. Когда окружающая обстановка становится предсказуемой, возникает чувство скуки. Но это прекрасный шанс выйти из зоны комфорта и попробовать что-то необычное.</p>
                 </div>
-
-                <div class="card-grid">
-                    <div class="card">
-                        <h3>Творческий подход</h3>
-                        <p>Рисование, письмо, рукоделие — сотни способов выразить себя и создать что-то уникальное.</p>
-                        <div class="activity-element" style="background: linear-gradient(135deg, #ff6b6b, #ff9f68);">
-                            <span>Творите без границ</span>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3>Активный отдых</h3>
-                        <p>Танцы, спорт, прогулки — движение не только развеет скуку, но и поднимет настроение.</p>
-                        <div class="activity-element" style="background: linear-gradient(135deg, #4ecdc4, #6a4cff);">
-                            <span>Двигайтесь с удовольствием</span>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3>Познание нового</h3>
-                        <p>Изучение языков, чтение, онлайн-курсы — превратите скуку в возможность для роста.</p>
-                        <div class="activity-element" style="background: linear-gradient(135deg, #ffe66d, #ff9f68);">
-                            <span>Учитесь с интересом</span>
-                        </div>
-                    </div>
+                <div class="about-visual">
+                    <i class="fas fa-heart"></i>
                 </div>
             </div>
-        </section>
-
-        <!-- Страница творчества -->
-        <section id="creative" class="page">
-            <div class="container">
-                <h2 class="section-title">Творческие занятия</h2>
-                
-                <div class="content-section">
-                    <h2>Рисование и живопись</h2>
-                    <p>Не нужно быть профессиональным художником, чтобы получать удовольствие от рисования. Экспериментируйте с разными техниками и материалами.</p>
-                    
-                    <div class="card-grid">
-                        <div class="card">
-                            <h3>Зентангл</h3>
-                            <p>Медитативное рисование узоров. Просто начните с одной линии и добавляйте узоры, куда приведет вас фантазия.</p>
-                        </div>
-                        <div class="card">
-                            <h3>Акварельные зарисовки</h3>
-                            <p>Наблюдайте, как цвета смешиваются на бумаге, создавая непредсказуемые эффекты.</p>
-                        </div>
-                        <div class="card">
-                            <h3>Рисование вслепую</h3>
-                            <p>Закройте глаза и рисуйте то, что чувствуете. Откройте глаза — вас ждет сюрприз!</p>
-                        </div>
+            
+            <div class="about-features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-seedling"></i>
                     </div>
+                    <h3 class="feature-title">Свежие цветы</h3>
+                    <p class="feature-text">Мы работаем напрямую с поставщиками, чтобы обеспечить максимальную свежесть наших цветов</p>
                 </div>
-
-                <div class="content-section">
-                    <h2>Письмо и сочинительство</h2>
-                    <p>Слова — это краски, а текст — ваша картина. Дайте волю воображению и создайте собственные литературные произведения.</p>
-                    
-                    <div class="card-grid">
-                        <div class="card">
-                            <h3>Шестисловная история</h3>
-                            <p>Напишите законченную историю всего из шести слов. Например: "Продал детство. Купил машину. Плачу."</p>
-                        </div>
-                        <div class="card">
-                            <h3>Письмо из будущего</h3>
-                            <p>Напишите письмо себе из будущего. Какие советы вы бы себе дали? Чего достигли?</p>
-                        </div>
-                        <div class="card">
-                            <h3>Случайный рассказ</h3>
-                            <p>Откройте книгу на случайной странице, выберите три слова и напишите рассказ, включающий их.</p>
-                        </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
                     </div>
+                    <h3 class="feature-title">Уникальные букеты</h3>
+                    <p class="feature-text">Наши флористы создают эксклюзивные композиции, которые идеально передают ваши эмоции</p>
                 </div>
-
-                <div class="content-section">
-                    <h2>Рукоделие и DIY</h2>
-                    <p>Создавайте вещи своими руками — это не только увлекательно, но и полезно.</p>
-                    
-                    <div class="activity-generator">
-                        <h3>Генератор творческих идей</h3>
-                        <p>Нажмите на кнопку, чтобы получить случайную творческую идею!</p>
-                        <button class="generator-btn" id="creative-generator">Получить идею</button>
-                        <div class="activity-result" id="creative-result"></div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shipping-fast"></i>
                     </div>
-                    
-                    <div class="card-grid">
-                        <div class="card">
-                            <h3>Бумажное моделирование</h3>
-                            <p>Создайте объемные фигуры из бумаги — от простых оригами до сложных архитектурных моделей.</p>
-                        </div>
-                        <div class="card">
-                            <h3>Вторая жизнь вещей</h3>
-                            <p>Превратите старые вещи во что-то новое и полезное. Баночки, коробки, одежда — все может получить вторую жизнь.</p>
-                        </div>
-                        <div class="card">
-                            <h3>Вышивка и вязание</h3>
-                            <p>Медитативное занятие, которое успокаивает и позволяет создавать красивые вещи.</p>
-                        </div>
+                    <h3 class="feature-title">Быстрая доставка</h3>
+                    <p class="feature-text">Доставляем цветы вовремя в любую точку города в удобное для вас время</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-award"></i>
                     </div>
+                    <h3 class="feature-title">Гарантия качества</h3>
+                    <p class="feature-text">Мы гарантируем, что наши цветы простоят долго и будут радовать вас своей красотой</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Страница активности -->
-        <section id="active" class="page">
-            <div class="container">
-                <h2 class="section-title">Активные занятия</h2>
-                
-                <div class="content-section">
-                    <h2>Домашняя активность</h2>
-                    <p>Не нужно выходить из дома, чтобы быть активным. Эти занятия помогут размяться и поднять настроение.</p>
-                    
-                    <div class="card-grid">
-                        <div class="card">
-                            <h3>Танцевальный марафон</h3>
-                            <p>Включите любимую музыку и танцуйте так, как будто никто не видит. 30 минут танцев = отличное настроение!</p>
-                        </div>
-                        <div class="card">
-                            <h3>Йога для начинающих</h3>
-                            <p>Простые асаны, которые можно выполнять без специальной подготовки. Отлично расслабляет и тонизирует.</p>
-                        </div>
-                        <div class="card">
-                            <h3>Уборка-челлендж</h3>
-                            <p>Поставьте таймер на 15 минут и уберитесь в одной комнате. Музыкальное сопровождение обязательно!</p>
-                        </div>
+    <!-- Цветы -->
+    <section id="flowers" class="page">
+        <div class="section">
+            <h2 class="section-title">Наши цветы</h2>
+            <div class="flowers-grid">
+                <!-- Цветы будут добавляться через JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Магазин -->
+    <section id="shop" class="page">
+        <div class="section">
+            <h2 class="section-title">Наши букеты</h2>
+            <div class="products-grid">
+                <!-- Букеты будут добавляться через JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Статьи -->
+    <section id="articles" class="page">
+        <div class="section">
+            <h2 class="section-title">Полезные статьи</h2>
+            <div class="articles-grid">
+                <div class="article-card">
+                    <div class="article-image"></div>
+                    <div class="article-body">
+                        <h3 class="article-title">Как ухаживать за розами</h3>
+                        <p class="article-excerpt">Узнайте, как правильно ухаживать за розами, чтобы они дольше сохраняли свою красоту и свежесть...</p>
+                        <a href="#" class="article-link" data-article="roses-care">Читать далее</a>
                     </div>
                 </div>
-
-                <div class="content-section">
-                    <h2>Уличные приключения</h2>
-                    <p>Выйдите на улицу и откройте для себя новый взгляд на привычные места.</p>
-                    
-                    <div class="card-grid">
-                        <div class="card">
-                            <h3>Фотопрогулка</h3>
-                            <p>Возьмите телефон или фотоаппарат и отправляйтесь на поиски интересных кадров. Снимайте детали, которые обычно не замечаете.</p>
-                        </div>
-                        <div class="card">
-                            <h3>Незнакомый маршрут</h3>
-                            <p>Пройдите по улице, где никогда не были. Поворачивайте наугад на каждом перекрестке.</p>
-                        </div>
-                        <div class="card">
-                            <h3>Парковый квест</h3>
-                            <p>Придумайте себе задание в парке: найти 10 разных видов растений, посчитать птиц, нарисовать карту местности.</p>
-                        </div>
+                <div class="article-card">
+                    <div class="article-image"></div>
+                    <div class="article-body">
+                        <h3 class="article-title">Цветы для разных случаев</h3>
+                        <p class="article-excerpt">Как выбрать идеальные цветы для дня рождения, свадьбы, юбилея или просто без повода...</p>
+                        <a href="#" class="article-link" data-article="flowers-occasions">Читать далее</a>
                     </div>
                 </div>
-
-                <div class="content-section">
-                    <h2>Спорт и игры</h2>
-                    <p>Активные игры — отличный способ развеять скуку и провести время с пользой.</p>
-                    
-                    <div class="activity-generator">
-                        <h3>Генератор активностей</h3>
-                        <p>Нажмите на кнопку, чтобы получить случайную активную идею!</p>
-                        <button class="generator-btn" id="active-generator">Получить идею</button>
-                        <div class="activity-result" id="active-result"></div>
+                <div class="article-card">
+                    <div class="article-image"></div>
+                    <div class="article-body">
+                        <h3 class="article-title">Символика цветов</h3>
+                        <p class="article-excerpt">Что означают разные цветы и их цвета? Узнайте язык цветов, чтобы выразить именно те чувства...</p>
+                        <a href="#" class="article-link" data-article="flowers-symbolism">Читать далее</a>
                     </div>
-                    
-                    <div class="highlight">
-                        <p>Движение — это жизнь! Всего 20 минут физической активности могут полностью изменить ваше настроение и уровень энергии.</p>
+                </div>
+                <div class="article-card">
+                    <div class="article-image"></div>
+                    <div class="article-body">
+                        <h3 class="article-title">Советы флориста</h3>
+                        <p class="article-excerpt">Профессиональные советы от наших флористов по составлению букетов и уходу за растениями...</p>
+                        <a href="#" class="article-link" data-article="florist-tips">Читать далее</a>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <div class="article-image"></div>
+                    <div class="article-body">
+                        <h3 class="article-title">Сезонные цветы</h3>
+                        <p class="article-excerpt">Какие цветы лучше выбирать в разные времена года? Узнайте о сезонных особенностях цветов...</p>
+                        <a href="#" class="article-link" data-article="seasonal-flowers">Читать далее</a>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <div class="article-image"></div>
+                    <div class="article-body">
+                        <h3 class="article-title">Экзотические растения</h3>
+                        <p class="article-excerpt">Все о редких и экзотических цветах: как их выращивать и ухаживать за ними в домашних условиях...</p>
+                        <a href="#" class="article-link" data-article="exotic-plants">Читать далее</a>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Страница обучения -->
-        <section id="learning" class="page">
-            <div class="container">
-                <h2 class="section-title">Образовательные занятия</h2>
-                
-                <div class="content-section">
-                    <h2>Онлайн-курсы и лекции</h2>
-                    <p>Интернет открывает безграничные возможности для обучения. Выберите то, что вам действительно интересно.</p>
-                    
-                    <div class="card-grid">
-                        <div class="card">
-                            <h3>Изучение языка</h3>
-                            <p>Начните учить новый язык с помощью приложений или онлайн-курсов. Всего 15 минут в день дадут заметный результат.</p>
-                        </div>
-                        <div class="card">
-                            <h3>Научные лекции</h3>
-                            <p>Посмотрите лекции по физике, астрономии, биологии — откройте для себя удивительный мир науки.</p>
-                        </div>
-                        <div class="card">
-                            <h3>Кулинарные мастер-классы</h3>
-                            <p>Научитесь готовить блюда разных кухонь мира. Это и полезно, и вкусно!</p>
-                        </div>
+    <!-- Отзывы -->
+    <section id="reviews" class="page">
+        <div class="section">
+            <h2 class="section-title">Отзывы наших клиентов</h2>
+            <div class="reviews-container">
+                <div class="reviews-list">
+                    <div class="reviews-filter">
+                        <button class="filter-btn active" data-rating="all">Все отзывы</button>
+                        <button class="filter-btn" data-rating="5">5 звезд</button>
+                        <button class="filter-btn" data-rating="4">4 звезды</button>
+                        <button class="filter-btn" data-rating="3">3 звезды</button>
+                    </div>
+                    <div id="reviewsList">
+                        <!-- Отзывы будут добавляться через JavaScript -->
                     </div>
                 </div>
-
-                <div class="content-section">
-                    <h2>Чтение и исследование</h2>
-                    <p>Книги и статьи — это окно в другие миры и эпохи.</p>
-                    
-                    <div class="card-grid">
-                        <div class="card">
-                            <h3>Тематическое чтение</h3>
-                            <p>Выберите тему, которая вас интересует, и прочитайте о ней 3-5 статей или глав из книг.</p>
+                <div class="add-review">
+                    <h3>Оставить отзыв</h3>
+                    <form id="reviewForm">
+                        <div class="form-group">
+                            <label for="reviewName">Ваше имя</label>
+                            <input type="text" id="reviewName" class="form-control" required>
                         </div>
-                        <div class="card">
-                            <h3>Биография великого человека</h3>
-                            <p>Узнайте о жизни и достижениях кого-то, кто вас вдохновляет.</p>
+                        <div class="form-group">
+                            <label>Ваша оценка</label>
+                            <div class="rating-stars" id="ratingStars">
+                                <span class="rating-star" data-rating="1"><i class="far fa-star"></i></span>
+                                <span class="rating-star" data-rating="2"><i class="far fa-star"></i></span>
+                                <span class="rating-star" data-rating="3"><i class="far fa-star"></i></span>
+                                <span class="rating-star" data-rating="4"><i class="far fa-star"></i></span>
+                                <span class="rating-star" data-rating="5"><i class="far fa-star"></i></span>
+                            </div>
+                            <input type="hidden" id="reviewRating" value="0">
                         </div>
-                        <div class="card">
-                            <h3>Научно-популярные книги</h3>
-                            <p>Откройте для себя увлекательный мир научпопа — от квантовой физики до психологии.</p>
+                        <div class="form-group">
+                            <label for="reviewText">Ваш отзыв</label>
+                            <textarea id="reviewText" class="form-control" rows="5" required></textarea>
                         </div>
-                    </div>
-                </div>
-
-                <div class="content-section">
-                    <h2>Практические навыки</h2>
-                    <p>Освойте то, что пригодится в повседневной жизни.</p>
-                    
-                    <div class="activity-generator">
-                        <h3>Генератор обучающих идей</h3>
-                        <p>Нажмите на кнопку, чтобы получить случайную образовательную идею!</p>
-                        <button class="generator-btn" id="learning-generator">Получить идею</button>
-                        <div class="activity-result" id="learning-result"></div>
-                    </div>
-                    
-                    <div class="highlight">
-                        <p>Знания — это единственное, что нельзя отнять. Каждый новый навык или информация делают вас интереснее и расширяют ваши возможности.</p>
-                    </div>
+                        <button type="submit" class="btn">Отправить отзыв</button>
+                    </form>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Страница случайностей -->
-        <section id="random" class="page">
-            <div class="container">
-                <h2 class="section-title">Неожиданные занятия</h2>
-                
-                <div class="content-section">
-                    <h2>Случайные открытия</h2>
-                    <p>Иногда самые интересные занятия находятся там, где мы их не ожидаем найти.</p>
-                    
-                    <div class="card-grid">
-                        <div class="card">
-                            <h3>Википедия-серфинг</h3>
-                            <p>Начните со случайной статьи и переходите по ссылкам. Куда приведет вас это путешествие?</p>
+    <!-- Контакты -->
+    <section id="contact" class="page">
+        <div class="section">
+            <h2 class="section-title">Свяжитесь с нами</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item animate-on-scroll">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
                         </div>
-                        <div class="card">
-                            <h3>Карта воспоминаний</h3>
-                            <p>Нарисуйте карту мест, где вы бывали, или создайте коллаж из фотографий и сувениров.</p>
+                        <div class="contact-text">
+                            <h3>Наш адрес</h3>
+                            <p>г. Оренбург, ул. Цветочная, 15</p>
                         </div>
-                        <div class="card">
-                            <h3>Игра в ассоциации</h3>
-                            <p>Возьмите первый попавшийся предмет и придумайте 10 необычных способов его использования.</p>
+                    </div>
+                    <div class="contact-item animate-on-scroll">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Телефон</h3>
+                            <p>+7 (3532) 123-45-67</p>
+                        </div>
+                    </div>
+                    <div class="contact-item animate-on-scroll">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Email</h3>
+                            <p>likaorenburg@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item animate-on-scroll">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Часы работы</h3>
+                            <p>Пн-Пт: 9:00 - 20:00<br>Сб-Вс: 10:00 - 18:00</p>
+                        </div>
+                    </div>
+                    <div class="contact-item animate-on-scroll">
+                        <div class="contact-icon">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Социальные сети</h3>
+                            <div class="social-links">
+                                <a href="https://vk.com/likallk" target="_blank"><i class="fab fa-vk"></i></a>
+                                <a href="https://t.me/likallk" target="_blank"><i class="fab fa-telegram"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                            <div class="social-contact">
+                                <a href="https://vk.com/likallk" target="_blank"><i class="fab fa-vk"></i> likallk</a>
+                                <a href="https://t.me/likallk" target="_blank"><i class="fab fa-telegram"></i> likallk</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="content-section">
-                    <h2>Социальные эксперименты</h2>
-                    <p>Выйдите из зоны комфорта и попробуйте что-то совершенно новое.</p>
-                    
-                    <div class="card-grid">
-                        <div class="card">
-                            <h3>День без планов</h3>
-                            <p>Проснитесь и действуйте спонтанно. Делайте то, что хочется в данный момент, без плана и расписания.</p>
+                <div class="contact-form">
+                    <form id="contactForm" action="https://formspree.io/f/mjvnzzvq" method="POST">
+                        <div class="form-group animate-on-scroll">
+                            <label for="name">Ваше имя</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
                         </div>
-                        <div class="card">
-                            <h3>Разговор с незнакомцем</h3>
-                            <p>Заведите беседу с кем-то, кого никогда раньше не видели. Узнайте что-то интересное о другом человеке.</p>
+                        <div class="form-group animate-on-scroll">
+                            <label for="email">Ваш email</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
                         </div>
-                        <div class="card">
-                            <h3>Поменяйтесь ролями</h3>
-                            <p>На один день поменяйтесь обязанностями с кем-то из семьи или друзей. Это откроет новые перспективы.</p>
+                        <div class="form-group animate-on-scroll">
+                            <label for="phone">Ваш телефон</label>
+                            <input type="tel" id="phone" name="phone" class="form-control">
                         </div>
-                    </div>
-                </div>
-
-                <div class="content-section">
-                    <h2>Универсальный генератор идей</h2>
-                    <p>Когда все надоело, доверьтесь случаю!</p>
-                    
-                    <div class="activity-generator">
-                        <h3>Случайная активность</h3>
-                        <p>Нажмите на кнопку, чтобы получить совершенно случайную идею для занятия!</p>
-                        <button class="generator-btn" id="random-generator">Получить идею</button>
-                        <div class="activity-result" id="random-result"></div>
-                    </div>
-                    
-                    <div class="highlight">
-                        <p>Самые запоминающиеся моменты часто происходят спонтанно. Позвольте себе быть непредсказуемым!</p>
-                    </div>
+                        <div class="form-group animate-on-scroll">
+                            <label for="message">Ваше сообщение</label>
+                            <textarea id="message" name="message" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="btn animate-on-scroll" style="width: 100%;"><i class="fas fa-paper-plane"></i> Отправить сообщение</button>
+                    </form>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
+    <!-- Футер -->
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">Анти<span>Скука</span></div>
-                <div class="footer-links">
-                    <a href="#" class="nav-link" data-page="home">Главная</a>
-                    <a href="#" class="nav-link" data-page="creative">Творчество</a>
-                    <a href="#" class="nav-link" data-page="active">Активность</a>
-                    <a href="#" class="nav-link" data-page="learning">Обучение</a>
-                    <a href="#" class="nav-link" data-page="random">Случайности</a>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Флоралия</h3>
+                <p>Цветочный магазин с душой. Мы создаем красивые букеты, которые передают ваши чувства и эмоции.</p>
+                <div class="social-links">
+                    <a href="https://vk.com/likallk" target="_blank"><i class="fab fa-vk"></i></a>
+                    <a href="https://t.me/likallk" target="_blank"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
                 </div>
-                <div class="copyright">© 2025 АнтиСкука. Все права защищены.</div>
             </div>
+            <div class="footer-col">
+                <h3>Быстрые ссылки</h3>
+                <ul class="footer-links">
+                    <li><a href="#" data-page="home"><i class="fas fa-home"></i> Главная</a></li>
+                    <li><a href="#" data-page="about"><i class="fas fa-info-circle"></i> О нас</a></li>
+                    <li><a href="#" data-page="flowers"><i class="fas fa-leaf"></i> Цветы</a></li>
+                    <li><a href="#" data-page="shop"><i class="fas fa-shopping-bag"></i> Букеты</a></li>
+                    <li><a href="#" data-page="articles"><i class="fas fa-newspaper"></i> Статьи</a></li>
+                    <li><a href="#" data-page="reviews"><i class="fas fa-star"></i> Отзывы</a></li>
+                    <li><a href="#" data-page="contact"><i class="fas fa-envelope"></i> Контакты</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Полезные статьи</h3>
+                <ul class="footer-links">
+                    <li><a href="#" data-article="roses-care"><i class="fas fa-book"></i> Как ухаживать за розами</a></li>
+                    <li><a href="#" data-article="flowers-occasions"><i class="fas fa-book"></i> Цветы для разных случаев</a></li>
+                    <li><a href="#" data-article="flowers-symbolism"><i class="fas fa-book"></i> Символика цветов</a></li>
+                    <li><a href="#" data-article="florist-tips"><i class="fas fa-book"></i> Советы флориста</a></li>
+                    <li><a href="#" data-article="seasonal-flowers"><i class="fas fa-book"></i> Сезонные цветы</a></li>
+                    <li><a href="#" data-article="exotic-plants"><i class="fas fa-book"></i> Экзотические растения</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Подписка на новости</h3>
+                <p>Подпишитесь на нашу рассылку и получайте информацию о новых поступлениях и специальных предложениях!</p>
+                <form id="newsletterForm">
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Ваш email" required>
+                    </div>
+                    <button type="submit" class="btn">Подписаться</button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Флоралия. Все права защищены.</p>
         </div>
     </footer>
 
+    <!-- Модальное окно корзины -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeCartModal">&times;</button>
+            <div class="cart-tabs">
+                <div class="cart-tab active" data-tab="cart">Корзина</div>
+                <div class="cart-tab" data-tab="order">Оформление заказа</div>
+            </div>
+            
+            <div class="tab-content active" id="cartTab">
+                <h2>Ваша корзина</h2>
+                <div id="cartItems">
+                    <!-- Товары будут добавляться сюда -->
+                </div>
+                <div id="cartTotal" class="cart-total"></div>
+                <button class="btn" style="width: 100%; margin-top: 20px;" id="checkoutBtn">Оформить заказ</button>
+            </div>
+            
+            <div class="tab-content" id="orderTab">
+                <h2>Оформление заказа</h2>
+                <form id="orderForm" class="order-form">
+                    <div class="form-group">
+                        <label for="orderName">Ваше имя *</label>
+                        <input type="text" id="orderName" name="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderPhone">Телефон *</label>
+                        <input type="tel" id="orderPhone" name="phone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderEmail">Email</label>
+                        <input type="email" id="orderEmail" name="email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="orderAddress">Адрес доставки</label>
+                        <input type="text" id="orderAddress" name="address" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="orderComment">Комментарий к заказу</label>
+                        <textarea id="orderComment" name="comment" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="cart-total" id="orderTotal"></div>
+                    <button type="submit" class="btn" style="width: 100%; margin-top: 20px;">Подтвердить заказ</button>
+                </form>
+            </div>
+            
+            <div class="tab-content" id="successTab">
+                <div class="order-success">
+                    <i class="fas fa-check-circle"></i>
+                    <h2>Заказ успешно оформлен!</h2>
+                    <p>Спасибо за ваш заказ. Мы свяжемся с вами в ближайшее время для подтверждения.</p>
+                    <button class="btn" id="continueShopping">Продолжить покупки</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно статьи -->
+    <div class="modal" id="articleModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeArticleModal">&times;</button>
+            <div id="articleContent">
+                <!-- Содержимое статьи будет добавляться сюда -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Уведомления -->
+    <div class="notification" id="notification">
+        <span id="notificationText">Текст уведомления</span>
+    </div>
+
     <script>
+        // Данные для товаров
+        const flowersData = [
+            { id: 1, name: "Роза красная", price: 150, description: "Классическая красная роза - символ любви и страсти" },
+            { id: 2, name: "Роза белая", price: 140, description: "Элегантная белая роза - символ чистоты и невинности" },
+            { id: 3, name: "Роза розовая", price: 130, description: "Нежная розовая роза - символ восхищения и благодарности" },
+            { id: 4, name: "Тюльпан красный", price: 80, description: "Яркий красный тюльпан - символ совершенной любви" },
+            { id: 5, name: "Тюльпан желтый", price: 75, description: "Солнечный желтый тюльпан - символ дружбы и радости" },
+            { id: 6, name: "Лилия белая", price: 200, description: "Величественная белая лилия - символ чистоты и возрождения" },
+            { id: 7, name: "Орхидея фаленопсис", price: 350, description: "Изысканная орхидея - символ роскоши и красоты" },
+            { id: 8, name: "Пион розовый", price: 180, description: "Пышный розовый пион - символ процветания и счастливого брака" },
+            { id: 9, name: "Гортензия голубая", price: 220, description: "Объемная голубая гортензия - символ искренности и понимания" },
+            { id: 10, name: "Хризантема белая", price: 90, description: "Нежная белая хризантема - символ оптимизма и долголетия" },
+            { id: 11, name: "Гербера оранжевая", price: 110, description: "Яркая оранжевая гербера - символ жизнерадостности" },
+            { id: 12, name: "Ирис фиолетовый", price: 95, description: "Загадочный фиолетовый ирис - символ мудрости и доверия" },
+            // Экзотические цветы
+            { id: 13, name: "Стрелиция", price: 450, description: "Экзотический цветок, напоминающий райскую птицу", exotic: true },
+            { id: 14, name: "Протея", price: 500, description: "Необычный цветок из Южной Африки с крупными соцветиями", exotic: true },
+            { id: 15, name: "Антуриум", price: 380, description: "Тропическое растение с яркими восковыми цветами", exotic: true },
+            { id: 16, name: "Глориоза", price: 420, description: "Экзотическая лиана с необычными цветами-факелами", exotic: true },
+            { id: 17, name: "Пассифлора", price: 320, description: "Страстоцвет с необычной структурой цветка", exotic: true },
+            { id: 18, name: "Гименокаллис", price: 280, description: "Нежный цветок с изящными лепестками, похожий на паука", exotic: true },
+            { id: 19, name: "Калла эфиопская", price: 350, description: "Элегантный цветок с изысканным изгибом", exotic: true },
+            { id: 20, name: "Бромелиевые", price: 400, description: "Тропические растения с яркими прицветниками", exotic: true },
+            { id: 21, name: "Геликония", price: 480, description: "Экзотическое растение с необычными соцветиями", exotic: true },
+            { id: 22, name: "Лотос", price: 520, description: "Священный цветок с глубоким символическим значением", exotic: true }
+        ];
+
+        const bouquetsData = [
+            { id: 101, name: "Романтический букет", price: 2500, description: "Нежная композиция из роз, пионов и эвкалипта для особенных моментов" },
+            { id: 102, name: "Весеннее настроение", price: 1800, description: "Свежий букет из тюльпанов, гербер и гипсофилы для поднятия настроения" },
+            { id: 103, name: "Элегантная лилия", price: 3200, description: "Изысканная композиция из лилий, орхидей и зелени для особых случаев" },
+            { id: 104, name: "Нежность гортензии", price: 2700, description: "Пышный букет из гортензий, роз и эвкалипта с нотками романтики" },
+            { id: 105, name: "Свадебный букет", price: 3500, description: "Изысканная композиция из белых роз, лилий и эвкалипта для невесты" },
+            { id: 106, name: "Букет для мамы", price: 2200, description: "Теплая композиция из розовых роз, хризантем и гипсофилы" },
+            { id: 107, name: "Деловой букет", price: 1900, description: "Строгий и элегантный букет из калл, орхидей и зелени" },
+            { id: 108, name: "Осенняя симфония", price: 2800, description: "Букет в теплых осенних тонах из гербер, хризантем и декоративной зелени" },
+            { id: 109, name: "Летний бриз", price: 2100, description: "Свежий букет из полевых цветов и зелени с нотками лета" },
+            { id: 110, name: "Королевский букет", price: 4500, description: "Роскошная композиция из редких сортов роз, орхидей и эвкалипта" },
+            { id: 111, name: "Минимализм", price: 1700, description: "Лаконичный букет из одного вида цветов в современном стиле" },
+            { id: 112, name: "Цветочная фантазия", price: 2900, description: "Яркая композиция из разнообразных цветов для особого настроения" }
+        ];
+
+        // Данные для статей
+        const articlesData = {
+            'roses-care': {
+                title: 'Как ухаживать за розами',
+                content: `
+                    <h2>Как ухаживать за розами</h2>
+                    <p>Розы - одни из самых популярных цветов, но они требуют особого ухода, чтобы сохранить свою красоту как можно дольше. Вот несколько советов:</p>
+                    <h3>1. Подготовка вазы</h3>
+                    <p>Тщательно вымойте вазу с моющим средством, чтобы удалить бактерии. Наполните ее чистой прохладной водой.</p>
+                    <h3>2. Обрезка стеблей</h3>
+                    <p>Подрежьте стебли под углом 45 градусов острым ножом. Это увеличит площадь впитывания воды.</p>
+                    <h3>3. Удаление листьев</h3>
+                    <p>Удалите листья, которые будут находиться под водой, чтобы предотвратить гниение.</p>
+                    <h3>4. Добавление питательных веществ</h3>
+                    <p>Используйте специальную подкормку для срезанных цветов или добавьте в воду немного сахара и несколько капель отбеливателя.</p>
+                    <h3>5. Регулярный уход</h3>
+                    <p>Меняйте воду каждые 2-3 дня, каждый раз подрезая стебли. Держите розы подальше от прямых солнечных лучей и сквозняков.</p>
+                `
+            },
+            'flowers-occasions': {
+                title: 'Цветы для разных случаев',
+                content: `
+                    <h2>Цветы для разных случаев</h2>
+                    <p>Выбор цветов зависит от повода и отношений с человеком. Вот несколько рекомендаций:</p>
+                    <h3>День рождения</h3>
+                    <p>Яркие и веселые цветы: герберы, хризантемы, тюльпаны. Учитывайте предпочтения именинника.</p>
+                    <h3>Свадьба</h3>
+                    <p>Элегантные белые цветы: розы, лилии, каллы. Можно добавить пастельные оттенки.</p>
+                    <h3>Юбилей</h3>
+                    <p>Благородные цветы: орхидеи, пионы, гортензии. Подойдут композиции в классическом стиле.</p>
+                    <h3>Без повода</h3>
+                    <p>Любые цветы, которые нравятся человеку. Можно выбрать что-то необычное и экзотическое.</p>
+                    <h3>Соболезнования</h3>
+                    <p>Сдержанные цветы белых и пастельных тонов: хризантемы, гвоздики, лилии.</p>
+                `
+            },
+            // Остальные статьи...
+        };
+
+        // Данные для отзывов
+        const initialReviews = [
+            { id: 1, name: "Анна", rating: 5, text: "Заказывала букет на юбилей родителей. Цветы были свежие, доставка вовремя. Родители в восторге! Обязательно буду заказывать еще.", date: "2023-10-15" },
+            { id: 2, name: "Дмитрий", rating: 4, text: "Понравилось обслуживание, флорист помог подобрать букет для девушки. Цветы продержались больше недели. Минус - немного завышенная цена.", date: "2023-09-22" },
+            { id: 3, name: "Екатерина", rating: 5, text: "Регулярно заказываю цветы в этом магазине. Всегда свежие и красивые. Особенно нравятся их сезонные букеты.", date: "2023-11-05" },
+            { id: 4, name: "Сергей", rating: 3, text: "Букет был красивым, но некоторые цветы немного подвяли на следующий день. В целом неплохо, но есть куда расти.", date: "2023-08-30" },
+            { id: 5, name: "Ольга", rating: 5, text: "Лучший цветочный магазин в городе! Заказывала свадебный букет - просто сказка! Все гости были в восторге.", date: "2023-10-28" },
+            { id: 6, name: "Иван", rating: 4, text: "Хороший выбор цветов, приятные цены. Доставка быстрая. Рекомендую!", date: "2023-11-12" }
+        ];
+
         // Навигация между страницами
         document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.nav-link');
+            const navLinks = document.querySelectorAll('.nav-links a, .logo, .btn[data-page], .footer-links a');
             const pages = document.querySelectorAll('.page');
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const mobileNav = document.querySelector('.mobile-nav');
-            const progressBar = document.getElementById('progressBar');
+            const hamburger = document.querySelector('.hamburger');
+            const navLinksContainer = document.querySelector('.nav-links');
+            const themeToggle = document.getElementById('themeToggle');
             
-            // Генераторы идей
-            const creativeGenerator = document.getElementById('creative-generator');
-            const creativeResult = document.getElementById('creative-result');
-            const activeGenerator = document.getElementById('active-generator');
-            const activeResult = document.getElementById('active-result');
-            const learningGenerator = document.getElementById('learning-generator');
-            const learningResult = document.getElementById('learning-result');
-            const randomGenerator = document.getElementById('random-generator');
-            const randomResult = document.getElementById('random-result');
+            // Инициализация темы
+            initTheme();
             
-            // Базы идей для генераторов
-            const creativeIdeas = [
-                "Нарисуйте автопортрет, используя только геометрические фигуры",
-                "Создайте коллаж из старых журналов на тему 'Город будущего'",
-                "Напишите стихотворение, где каждая строка начинается с очередной буквы алфавита",
-                "Слепите из глины или пластилина абстрактную скульптуру",
-                "Создайте комикс о вашем домашнем питомце (или воображаемом)",
-                "Раскрасьте камни и создайте из них мини-сад",
-                "Сделайте открытку в технике скрапбукинг",
-                "Нарисуйте картину, используя вместо кистей природные материалы"
-            ];
+            // Обработчик для переключения темы
+            themeToggle.addEventListener('click', function() {
+                toggleTheme();
+            });
             
-            const activeIdeas = [
-                "Сделайте 10-минутную зарядку под зажигательную музыку",
-                "Пройдите 10000 шагов, исследуя новые маршруты в вашем районе",
-                "Потанцуйте, как будто вы находитесь в музыкальном клипе",
-                "Сделайте растяжку всех основных групп мышц",
-                "Попрыгайте на скакалке 5 минут",
-                "Сыграйте в бадминтон или другой активный вид спорта с другом",
-                "Совершите велопрогулку в ближайший парк",
-                "Попробуйте простые упражнения из йоги для начинающих"
-            ];
-            
-            const learningIdeas = [
-                "Посмотрите документальный фильм о культуре другой страны",
-                "Изучите основы языка жестов",
-                "Узнайте о жизни и творчестве малоизвестного художника",
-                "Прочитайте статью о последних научных открытиях",
-                "Изучите основы финансовой грамотности",
-                "Узнайте о традициях и обычаях народов мира",
-                "Посмотрите мастер-класс по каллиграфии",
-                "Изучите историю вашего города или района"
-            ];
-            
-            const randomIdeas = [
-                "Составьте список из 100 вещей, которые делают вас счастливым",
-                "Напишите письмо своему будущему 'я' через 10 лет",
-                "Создайте плейлист для разных настроений",
-                "Придумайте и нарисуйте собственный герб",
-                "Сделайте оригами и подарите его случайному человеку",
-                "Напишите рассказ, где главный герой — это вы в другом времени",
-                "Создайте карту желаний на ближайший год",
-                "Попробуйте медитацию с визуализацией"
-            ];
-            
-            // Функция переключения страниц
-            function switchPage(pageId) {
-                // Скрыть все страницы
-                pages.forEach(page => {
-                    page.classList.remove('active');
-                });
-                
-                // Показать выбранную страницу
-                document.getElementById(pageId).classList.add('active');
-                
-                // Обновить активную ссылку в навигации
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('data-page') === pageId) {
-                        link.classList.add('active');
-                    }
-                });
-                
-                // Закрыть мобильное меню после выбора страницы
-                if (window.innerWidth <= 768) {
-                    mobileNav.classList.remove('active');
+            // Функция инициализации темы
+            function initTheme() {
+                const savedTheme = localStorage.getItem('theme') || 'light';
+                if (savedTheme === 'dark') {
+                    document.body.classList.add('dark-theme');
                 }
-                
-                // Прокрутить к верху страницы
-                window.scrollTo(0, 0);
             }
             
-            // Обработчики для навигационных ссылок
+            // Функция переключения темы
+            function toggleTheme() {
+                document.body.classList.toggle('dark-theme');
+                
+                if (document.body.classList.contains('dark-theme')) {
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                }
+            }
+            
+            // Обработчик для навигационных ссылок
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const pageId = this.getAttribute('data-page');
-                    switchPage(pageId);
+                    const targetPage = this.getAttribute('data-page');
+                    
+                    if (targetPage) {
+                        // Скрыть все страницы
+                        pages.forEach(page => {
+                            page.classList.remove('active');
+                        });
+                        
+                        // Показать целевую страницу
+                        document.getElementById(targetPage).classList.add('active');
+                        
+                        // Закрыть мобильное меню, если оно открыто
+                        navLinksContainer.classList.remove('active');
+                        
+                        // Прокрутка к верху страницы
+                        window.scrollTo(0, 0);
+                    }
                 });
             });
             
-            // Обработчик для кнопки мобильного меню
-            mobileMenuBtn.addEventListener('click', function() {
-                mobileNav.classList.toggle('active');
+            // Обработчик для гамбургер-меню
+            hamburger.addEventListener('click', function() {
+                navLinksContainer.classList.toggle('active');
             });
             
-            // Закрытие мобильного меню при клике вне его
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.mobile-nav') && !e.target.closest('.mobile-menu-btn')) {
-                    mobileNav.classList.remove('active');
-                }
-            });
+            // Анимация элементов при прокрутке
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.animate-on-scroll');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.classList.add('animated');
+                    }
+                });
+            };
             
-            // Обработчик изменения размера окна
-            window.addEventListener('resize', function() {
-                if (window.innerWidth > 768) {
-                    mobileNav.classList.remove('active');
-                }
-            });
+            window.addEventListener('scroll', animateOnScroll);
+            // Вызов функции при загрузке для элементов, которые уже в поле зрения
+            animateOnScroll();
             
-            // Прогресс бар при скролле
+            // Обработчик для формы контактов
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    // Форма будет отправлена через Formspree
+                    showNotification('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
+                });
+            }
+            
+            // Обработчик для формы рассылки
+            const newsletterForm = document.getElementById('newsletterForm');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    showNotification('Спасибо за подписку на нашу рассылку!');
+                    newsletterForm.reset();
+                });
+            }
+            
+            // Параллакс эффект для плавающих элементов
             window.addEventListener('scroll', function() {
-                const windowHeight = window.innerHeight;
-                const documentHeight = document.documentElement.scrollHeight - windowHeight;
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                const progress = (scrollTop / documentHeight) * 100;
-                progressBar.style.width = progress + '%';
+                const scrolled = window.pageYOffset;
+                const hearts = document.querySelectorAll('.heart');
+                
+                hearts.forEach((heart, index) => {
+                    const speed = 0.5 + (index * 0.1);
+                    const yPos = -(scrolled * speed);
+                    heart.style.transform = `translateY(${yPos}px) rotate(${scrolled * 0.02}deg)`;
+                });
             });
             
-            // Обработчики для генераторов идей
-            creativeGenerator.addEventListener('click', function() {
-                const randomIndex = Math.floor(Math.random() * creativeIdeas.length);
-                creativeResult.textContent = creativeIdeas[randomIndex];
-                creativeResult.style.display = 'block';
+            // Анимация для кнопок при наведении
+            const buttons = document.querySelectorAll('.btn, .action-btn');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
             });
             
-            activeGenerator.addEventListener('click', function() {
-                const randomIndex = Math.floor(Math.random() * activeIdeas.length);
-                activeResult.textContent = activeIdeas[randomIndex];
-                activeResult.style.display = 'block';
+            // Функция показа уведомлений
+            function showNotification(message) {
+                const notification = document.getElementById('notification');
+                const notificationText = document.getElementById('notificationText');
+                
+                notificationText.textContent = message;
+                notification.classList.add('active');
+                
+                setTimeout(() => {
+                    notification.classList.remove('active');
+                }, 3000);
+            }
+            
+            // Корзина
+            let cart = [];
+            const cartCounter = document.getElementById('cartCounter');
+            const cartIcon = document.getElementById('cartIcon');
+            const cartModal = document.getElementById('cartModal');
+            const closeCartModal = document.getElementById('closeCartModal');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const orderForm = document.getElementById('orderForm');
+            const orderTotal = document.getElementById('orderTotal');
+            const continueShopping = document.getElementById('continueShopping');
+            const cartTabs = document.querySelectorAll('.cart-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            // Загрузка товаров на страницы
+            loadFlowers();
+            loadBouquets();
+            
+            // Загрузка отзывов
+            loadReviews();
+            
+            // Инициализация счетчика посещений
+            initVisitorCounter();
+            
+            // Обработчики для статей
+            initArticles();
+            
+            // Функция загрузки цветов
+            function loadFlowers() {
+                const flowersGrid = document.querySelector('#flowers .flowers-grid');
+                flowersGrid.innerHTML = '';
+                
+                flowersData.forEach(flower => {
+                    const flowerCard = document.createElement('div');
+                    flowerCard.className = 'flower-card animate-on-scroll';
+                    
+                    const exoticTag = flower.exotic ? '<div class="exotic-tag">Экзотика</div>' : '';
+                    
+                    flowerCard.innerHTML = `
+                        <div class="flower-image">
+                            ${exoticTag}
+                        </div>
+                        <div class="flower-body">
+                            <h3 class="flower-name">${flower.name}</h3>
+                            <div class="product-price">${flower.price} ₽</div>
+                            <p class="flower-symbolism">${flower.description}</p>
+                            <div class="product-actions">
+                                <button class="action-btn add-to-cart" data-id="${flower.id}" data-name="${flower.name}" data-price="${flower.price}"><i class="fas fa-shopping-cart"></i> В корзину</button>
+                            </div>
+                        </div>
+                    `;
+                    flowersGrid.appendChild(flowerCard);
+                });
+                
+                // Добавляем обработчики для кнопок добавления в корзину
+                const addToCartButtons = document.querySelectorAll('#flowers .add-to-cart');
+                addToCartButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const productId = this.getAttribute('data-id');
+                        const productName = this.getAttribute('data-name');
+                        const productPrice = parseInt(this.getAttribute('data-price'));
+                        
+                        // Добавляем товар в корзину
+                        addToCart(productId, productName, productPrice);
+                        showNotification(`Товар "${productName}" добавлен в корзину!`);
+                    });
+                });
+            }
+            
+            // Функция загрузки букетов
+            function loadBouquets() {
+                const productsGrid = document.querySelector('#shop .products-grid');
+                productsGrid.innerHTML = '';
+                
+                bouquetsData.forEach(bouquet => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card animate-on-scroll';
+                    productCard.innerHTML = `
+                        <div class="product-image"></div>
+                        <div class="product-body">
+                            <h3 class="product-title">${bouquet.name}</h3>
+                            <div class="product-price">${bouquet.price} ₽</div>
+                            <p>${bouquet.description}</p>
+                            <div class="product-actions">
+                                <button class="action-btn add-to-cart" data-id="${bouquet.id}" data-name="${bouquet.name}" data-price="${bouquet.price}"><i class="fas fa-shopping-cart"></i> В корзину</button>
+                            </div>
+                        </div>
+                    `;
+                    productsGrid.appendChild(productCard);
+                });
+                
+                // Добавляем обработчики для кнопок добавления в корзину
+                const addToCartButtons = document.querySelectorAll('#shop .add-to-cart');
+                addToCartButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const productId = this.getAttribute('data-id');
+                        const productName = this.getAttribute('data-name');
+                        const productPrice = parseInt(this.getAttribute('data-price'));
+                        
+                        // Добавляем товар в корзину
+                        addToCart(productId, productName, productPrice);
+                        showNotification(`Товар "${productName}" добавлен в корзину!`);
+                    });
+                });
+            }
+            
+            // Функция инициализации статей
+            function initArticles() {
+                // Обработчики для ссылок на статьи
+                const articleLinks = document.querySelectorAll('.article-link, .footer-links a[data-article]');
+                articleLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const articleId = this.getAttribute('data-article');
+                        openArticle(articleId);
+                    });
+                });
+                
+                // Обработчик для закрытия модального окна статьи
+                const closeArticleModal = document.getElementById('closeArticleModal');
+                const articleModal = document.getElementById('articleModal');
+                
+                closeArticleModal.addEventListener('click', function() {
+                    articleModal.classList.remove('active');
+                });
+                
+                // Закрытие модального окна при клике вне его
+                window.addEventListener('click', function(e) {
+                    if (e.target === articleModal) {
+                        articleModal.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Функция открытия статьи
+            function openArticle(articleId) {
+                const articleModal = document.getElementById('articleModal');
+                const articleContent = document.getElementById('articleContent');
+                
+                if (articlesData[articleId]) {
+                    articleContent.innerHTML = articlesData[articleId].content;
+                    articleModal.classList.add('active');
+                } else {
+                    showNotification('Статья временно недоступна');
+                }
+            }
+            
+            // Функция загрузки отзывов
+            function loadReviews(filterRating = 'all') {
+                const reviewsList = document.getElementById('reviewsList');
+                reviewsList.innerHTML = '';
+                
+                // Получаем отзывы из localStorage или используем начальные
+                let reviews = JSON.parse(localStorage.getItem('reviews')) || initialReviews;
+                
+                // Фильтруем отзывы по рейтингу
+                if (filterRating !== 'all') {
+                    reviews = reviews.filter(review => review.rating == filterRating);
+                }
+                
+                // Сортируем отзывы по дате (новые сначала)
+                reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                // Отображаем отзывы
+                reviews.forEach(review => {
+                    const reviewCard = document.createElement('div');
+                    reviewCard.className = 'review-card';
+                    
+                    // Создаем звезды рейтинга
+                    let starsHtml = '';
+                    for (let i = 1; i <= 5; i++) {
+                        if (i <= review.rating) {
+                            starsHtml += '<i class="fas fa-star"></i>';
+                        } else {
+                            starsHtml += '<i class="far fa-star"></i>';
+                        }
+                    }
+                    
+                    reviewCard.innerHTML = `
+                        <div class="review-header">
+                            <div class="review-author">${review.name}</div>
+                            <div class="review-date">${formatDate(review.date)}</div>
+                        </div>
+                        <div class="review-rating">${starsHtml}</div>
+                        <div class="review-text">${review.text}</div>
+                    `;
+                    reviewsList.appendChild(reviewCard);
+                });
+            }
+            
+            // Функция инициализации счетчика посещений
+            function initVisitorCounter() {
+                let count = localStorage.getItem('visitorCount');
+                
+                if (!count) {
+                    count = 1257; // Начальное значение
+                } else {
+                    count = parseInt(count) + 1;
+                }
+                
+                localStorage.setItem('visitorCount', count);
+                document.getElementById('visitorCount').textContent = count;
+            }
+            
+            // Функция форматирования даты
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('ru-RU');
+            }
+            
+            // Функция добавления в корзину
+            function addToCart(productId, productName, productPrice) {
+                // Проверяем, есть ли товар уже в корзине
+                const existingItem = cart.find(item => item.id === productId);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id: productId,
+                        name: productName,
+                        price: productPrice,
+                        quantity: 1
+                    });
+                }
+                
+                updateCartUI();
+            }
+            
+            // Функция обновления интерфейса корзины
+            function updateCartUI() {
+                // Обновляем счетчик
+                const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+                cartCounter.textContent = totalItems;
+                
+                // Обновляем содержимое корзины
+                cartItems.innerHTML = '';
+                let totalPrice = 0;
+                
+                if (cart.length === 0) {
+                    cartItems.innerHTML = '<div class="empty-cart">Ваша корзина пуста</div>';
+                    checkoutBtn.disabled = true;
+                } else {
+                    checkoutBtn.disabled = false;
+                    
+                    cart.forEach(item => {
+                        const itemTotal = item.price * item.quantity;
+                        totalPrice += itemTotal;
+                        
+                        const cartItem = document.createElement('div');
+                        cartItem.className = 'cart-item';
+                        
+                        cartItem.innerHTML = `
+                            <div class="cart-item-info">
+                                <div class="cart-item-name">${item.name}</div>
+                                <div class="cart-item-price">${item.price} ₽</div>
+                            </div>
+                            <div class="cart-item-controls">
+                                <button class="quantity-btn decrease-quantity" data-id="${item.id}">-</button>
+                                <span class="cart-item-quantity">${item.quantity}</span>
+                                <button class="quantity-btn increase-quantity" data-id="${item.id}">+</button>
+                                <button class="remove-from-cart" data-id="${item.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `;
+                        
+                        cartItems.appendChild(cartItem);
+                    });
+                    
+                    // Добавляем обработчики для кнопок управления количеством
+                    const decreaseButtons = document.querySelectorAll('.decrease-quantity');
+                    decreaseButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            const productId = this.getAttribute('data-id');
+                            decreaseQuantity(productId);
+                        });
+                    });
+                    
+                    const increaseButtons = document.querySelectorAll('.increase-quantity');
+                    increaseButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            const productId = this.getAttribute('data-id');
+                            increaseQuantity(productId);
+                        });
+                    });
+                    
+                    // Добавляем обработчики для кнопок удаления
+                    const removeButtons = document.querySelectorAll('.remove-from-cart');
+                    removeButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            const productId = this.getAttribute('data-id');
+                            removeFromCart(productId);
+                        });
+                    });
+                }
+                
+                cartTotal.textContent = `Итого: ${totalPrice} ₽`;
+                orderTotal.textContent = `Итого: ${totalPrice} ₽`;
+            }
+            
+            // Функция уменьшения количества товара
+            function decreaseQuantity(productId) {
+                const item = cart.find(item => item.id === productId);
+                if (item) {
+                    if (item.quantity > 1) {
+                        item.quantity -= 1;
+                    } else {
+                        removeFromCart(productId);
+                        return;
+                    }
+                    updateCartUI();
+                }
+            }
+            
+            // Функция увеличения количества товара
+            function increaseQuantity(productId) {
+                const item = cart.find(item => item.id === productId);
+                if (item) {
+                    item.quantity += 1;
+                    updateCartUI();
+                }
+            }
+            
+            // Функция удаления из корзины
+            function removeFromCart(productId) {
+                cart = cart.filter(item => item.id !== productId);
+                updateCartUI();
+                showNotification('Товар удален из корзины');
+            }
+            
+            // Обработчики для открытия/закрытия модального окна корзины
+            cartIcon.addEventListener('click', function() {
+                cartModal.classList.add('active');
+                switchTab('cart');
             });
             
-            learningGenerator.addEventListener('click', function() {
-                const randomIndex = Math.floor(Math.random() * learningIdeas.length);
-                learningResult.textContent = learningIdeas[randomIndex];
-                learningResult.style.display = 'block';
+            closeCartModal.addEventListener('click', function() {
+                cartModal.classList.remove('active');
             });
             
-            randomGenerator.addEventListener('click', function() {
-                const allIdeas = [...creativeIdeas, ...activeIdeas, ...learningIdeas, ...randomIdeas];
-                const randomIndex = Math.floor(Math.random() * allIdeas.length);
-                randomResult.textContent = allIdeas[randomIndex];
-                randomResult.style.display = 'block';
+            // Закрытие модального окна при клике вне его
+            window.addEventListener('click', function(e) {
+                if (e.target === cartModal) {
+                    cartModal.classList.remove('active');
+                }
             });
+            
+            // Обработчик для кнопки оформления заказа
+            checkoutBtn.addEventListener('click', function() {
+                if (cart.length > 0) {
+                    switchTab('order');
+                }
+            });
+            
+            // Обработчик для формы заказа
+            orderForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // В реальном приложении здесь был бы код отправки данных на сервер
+                // Для демонстрации просто показываем сообщение об успехе
+                
+                // Сохраняем данные заказа
+                const orderData = {
+                    name: document.getElementById('orderName').value,
+                    phone: document.getElementById('orderPhone').value,
+                    email: document.getElementById('orderEmail').value,
+                    address: document.getElementById('orderAddress').value,
+                    comment: document.getElementById('orderComment').value,
+                    items: cart,
+                    total: cart.reduce((total, item) => total + (item.price * item.quantity), 0),
+                    date: new Date().toISOString()
+                };
+                
+                // Сохраняем заказ в localStorage
+                saveOrder(orderData);
+                
+                // Показываем сообщение об успешном заказе
+                switchTab('success');
+                
+                // Очищаем корзину
+                cart = [];
+                updateCartUI();
+                
+                // Очищаем форму
+                orderForm.reset();
+            });
+            
+            // Функция сохранения заказа
+            function saveOrder(orderData) {
+                let orders = JSON.parse(localStorage.getItem('orders')) || [];
+                orders.push(orderData);
+                localStorage.setItem('orders', JSON.stringify(orders));
+            }
+            
+            // Обработчик для кнопки продолжения покупок
+            continueShopping.addEventListener('click', function() {
+                cartModal.classList.remove('active');
+                switchTab('cart');
+            });
+            
+            // Функция переключения вкладок в корзине
+            function switchTab(tabName) {
+                // Скрываем все вкладки
+                tabContents.forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // Показываем нужную вкладку
+                document.getElementById(tabName + 'Tab').classList.add('active');
+                
+                // Обновляем активную вкладку
+                cartTabs.forEach(tab => {
+                    tab.classList.remove('active');
+                    if (tab.getAttribute('data-tab') === tabName) {
+                        tab.classList.add('active');
+                    }
+                });
+            }
+            
+            // Обработчики для вкладок
+            cartTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+            
+            // Обработчики для фильтрации отзывов
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Убираем активный класс у всех кнопок
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Добавляем активный класс текущей кнопке
+                    this.classList.add('active');
+                    
+                    // Загружаем отзывы с выбранным фильтром
+                    const rating = this.getAttribute('data-rating');
+                    loadReviews(rating);
+                });
+            });
+            
+            // Обработчики для звезд рейтинга в форме отзыва
+            const ratingStars = document.querySelectorAll('.rating-star');
+            ratingStars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    
+                    // Обновляем отображение звезд
+                    ratingStars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.innerHTML = '<i class="fas fa-star"></i>';
+                            s.classList.add('active');
+                        } else {
+                            s.innerHTML = '<i class="far fa-star"></i>';
+                            s.classList.remove('active');
+                        }
+                    });
+                    
+                    // Устанавливаем значение рейтинга в скрытое поле
+                    document.getElementById('reviewRating').value = rating;
+                });
+            });
+            
+            // Обработчик для формы отзыва
+            const reviewForm = document.getElementById('reviewForm');
+            reviewForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('reviewName').value;
+                const rating = parseInt(document.getElementById('reviewRating').value);
+                const text = document.getElementById('reviewText').value;
+                
+                if (rating === 0) {
+                    showNotification('Пожалуйста, поставьте оценку');
+                    return;
+                }
+                
+                // Создаем новый отзыв
+                const newReview = {
+                    id: Date.now(),
+                    name: name,
+                    rating: rating,
+                    text: text,
+                    date: new Date().toISOString().split('T')[0]
+                };
+                
+                // Сохраняем отзыв в localStorage
+                saveReview(newReview);
+                
+                // Обновляем список отзывов
+                loadReviews();
+                
+                // Очищаем форму
+                reviewForm.reset();
+                
+                // Сбрасываем звезды
+                ratingStars.forEach(star => {
+                    star.innerHTML = '<i class="far fa-star"></i>';
+                    star.classList.remove('active');
+                });
+                document.getElementById('reviewRating').value = 0;
+                
+                showNotification('Спасибо за ваш отзыв!');
+            });
+            
+            // Функция сохранения отзыва
+            function saveReview(review) {
+                let reviews = JSON.parse(localStorage.getItem('reviews')) || initialReviews;
+                reviews.push(review);
+                localStorage.setItem('reviews', JSON.stringify(reviews));
+            }
+            
+            // Инициализация корзины
+            updateCartUI();
         });
     </script>
 </body>
